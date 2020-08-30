@@ -1,0 +1,51 @@
+buildscript {
+    ext.kotlin_version = '1.3.72'
+    repositories {
+        google()
+        jcenter()
+        
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.6.4'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+    }
+}
+
+def javaLibs = [
+]
+
+subprojects {
+    if (javaLibs.contains(project.name)) {
+        apply plugin: 'java-library'
+        apply plugin: 'kotlin'
+        dependencies {
+            implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+        }
+    } else {
+        apply plugin: 'com.android.library'
+        apply plugin: 'kotlin-android'
+        apply plugin: 'kotlin-android-extensions'
+            android {
+            compileSdkVersion 29
+            buildToolsVersion "29.0.3"
+
+            defaultConfig {
+                minSdkVersion 21
+                targetSdkVersion 29
+                versionCode 2
+                versionName "2.0"
+            }
+        }
+        dependencies {
+            implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+            implementation 'androidx.core:core-ktx:1.3.1'
+        }
+    }
+}
