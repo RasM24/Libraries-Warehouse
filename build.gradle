@@ -19,6 +19,7 @@ allprojects {
 }
 
 def javaLibs = [
+    "simple-ftp"
 ]
 
 subprojects {
