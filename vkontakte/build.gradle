@@ -1,0 +1,3 @@
+dependencies {
+	api "com.vk:androidsdk:1.6.5"
+}
