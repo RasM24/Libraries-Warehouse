@@ -1,3 +1,4 @@
 rootProject.name='Libraries-Warehouse'
 include ':vkontakte'
 include ':simple-ftp'
+include ':simple-telnet'

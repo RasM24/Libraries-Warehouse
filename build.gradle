@@ -19,7 +19,8 @@ allprojects {
 }
 
 def javaLibs = [
-    "simple-ftp"
+    "simple-ftp",
+    "simple-telnet"
 ]
 
 subprojects {
