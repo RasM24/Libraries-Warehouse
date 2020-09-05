@@ -1,4 +1,5 @@
 rootProject.name='Libraries-Warehouse'
+include ':arena'
 include ':fragment-navigation'
 include ':camp'
 include ':vkontakte'

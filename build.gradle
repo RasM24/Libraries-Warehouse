@@ -29,6 +29,7 @@ def javaLibs = [
 	simpleTelnet.name
 ]
 def androidLibs = [
+	arena.name,
 	fragmentNavigation.name,
 	camp.name,
 	vkontakte.name
@@ -88,6 +89,26 @@ artifactory {
 			password = "${artifactory_password}"
 			maven = true
 		}
+	}
+}
+
+//TODO Вынести в publishing.gradle
+project(arena.name) {
+	artifactoryPublish.dependsOn('build')
+	publishing {
+		publications {
+			aar(MavenPublication) {
+				groupId = "ru.endroad"
+				artifactId = arena.name
+				version = arena.version
+				// Tell maven to prepare the generated "*.aar" file for publishing
+				artifact("$buildDir/outputs/aar/${project.getName()}-release.aar")
+			}
+		}
+	}
+
+	artifactoryPublish {
+		publications(publishing.publications.aar)
 	}
 }
 

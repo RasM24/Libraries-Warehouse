@@ -1,3 +1,8 @@
+def arena = [:]
+arena.name = "arena"
+arena.version = "1.0"
+ext.arena = arena
+
 def fragmentNavigation = [:]
 fragmentNavigation.name = "fragment-navigation"
 fragmentNavigation.version = "0.9"
