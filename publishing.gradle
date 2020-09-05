@@ -3,6 +3,11 @@ fragmentNavigation.name = "fragment-navigation"
 fragmentNavigation.version = "0.9"
 ext.fragmentNavigation = fragmentNavigation
 
+def camp = [:]
+camp.name = "camp"
+camp.version = "1.0"
+ext.camp = camp
+
 def vkontakte = [:]
 vkontakte.name = "vkontakte"
 vkontakte.version = "0.9"

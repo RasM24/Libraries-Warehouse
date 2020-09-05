@@ -30,6 +30,7 @@ def javaLibs = [
 ]
 def androidLibs = [
 	fragmentNavigation.name,
+	camp.name,
 	vkontakte.name
 ]
 
@@ -99,6 +100,26 @@ project(fragmentNavigation.name) {
 				groupId = "ru.endroad"
 				artifactId = fragmentNavigation.name
 				version = fragmentNavigation.version
+				// Tell maven to prepare the generated "*.aar" file for publishing
+				artifact("$buildDir/outputs/aar/${project.getName()}-release.aar")
+			}
+		}
+	}
+
+	artifactoryPublish {
+		publications(publishing.publications.aar)
+	}
+}
+
+//TODO Вынести в publishing.gradle
+project(camp.name) {
+	artifactoryPublish.dependsOn('build')
+	publishing {
+		publications {
+			aar(MavenPublication) {
+				groupId = "ru.endroad"
+				artifactId = camp.name
+				version = camp.version
 				// Tell maven to prepare the generated "*.aar" file for publishing
 				artifact("$buildDir/outputs/aar/${project.getName()}-release.aar")
 			}
