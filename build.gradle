@@ -1,5 +1,6 @@
 buildscript {
 	apply from: 'dependencies.gradle'
+	apply from: 'publishing.gradle'
 	repositories {
 		google()
 		jcenter()
@@ -8,10 +9,14 @@ buildscript {
 	dependencies {
 		classpath 'com.android.tools.build:gradle:3.6.4'
 		classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}"
+		classpath 'org.jfrog.buildinfo:build-info-extractor-gradle:4.17.2'
 	}
 }
 
 allprojects {
+	apply plugin: 'com.jfrog.artifactory'
+	apply plugin: 'maven-publish'
+
 	repositories {
 		google()
 		jcenter()
@@ -20,12 +25,12 @@ allprojects {
 
 //TODO Вынести в subprojects.gradle
 def javaLibs = [
-	"simple-ftp",
-	"simple-telnet"
+	simpleFtp.name,
+	simpleTelnet.name
 ]
 def androidLibs = [
-	"fragment-navigation",
-	"vkontakte"
+	fragmentNavigation.name,
+	vkontakte.name
 ]
 
 //TODO Вынести в subprojects.gradle
@@ -61,5 +66,108 @@ configure(getProjectsBy(androidLibs)) {
 	dependencies {
 		implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${versions.kotlin}"
 		implementation 'androidx.core:core-ktx:1.3.1'
+	}
+}
+
+//TODO Вынести в publishing.gradle
+artifactory {
+	contextUrl = "${artifactory_contextUrl}"   //The base Artifactory URL if not overridden by the publisher/resolver
+	publish {
+		repository {
+			repoKey = 'gradle-release-local'
+			username = "${artifactory_user}"
+			password = "${artifactory_password}"
+			maven = true
+		}
+	}
+	resolve {
+		repository {
+			repoKey = 'gradle-dev'
+			username = "${artifactory_user}"
+			password = "${artifactory_password}"
+			maven = true
+		}
+	}
+}
+
+//TODO Вынести в publishing.gradle
+project(fragmentNavigation.name) {
+	artifactoryPublish.dependsOn('build')
+	publishing {
+		publications {
+			aar(MavenPublication) {
+				groupId = "ru.endroad"
+				artifactId = fragmentNavigation.name
+				version = fragmentNavigation.version
+				// Tell maven to prepare the generated "*.aar" file for publishing
+				artifact("$buildDir/outputs/aar/${project.getName()}-release.aar")
+			}
+		}
+	}
+
+	artifactoryPublish {
+		publications(publishing.publications.aar)
+	}
+}
+
+//TODO Вынести в publishing.gradle
+project(vkontakte.name) {
+	artifactoryPublish.dependsOn('build')
+	publishing {
+		publications {
+			aar(MavenPublication) {
+				groupId = "ru.endroad"
+				artifactId = vkontakte.name
+				version = vkontakte.version
+				// Tell maven to prepare the generated "*.aar" file for publishing
+				artifact("$buildDir/outputs/aar/${project.getName()}-release.aar")
+			}
+		}
+	}
+
+	artifactoryPublish {
+		publications(publishing.publications.aar)
+	}
+}
+
+//TODO Вынести в publishing.gradle
+//TODO publish JavaLib работает пока только в mavenLocal()
+project(simpleFtp.name) {
+	artifactoryPublish.dependsOn('build')
+	publishing {
+		publications {
+			rrr(MavenPublication) {
+				groupId = "ru.endroad"
+				artifactId = simpleFtp.name
+				version = simpleFtp.version
+				// Tell maven to prepare the generated "*.aar" file for publishing
+				artifact("$buildDir/libs/${project.getName()}.jar")
+			}
+		}
+	}
+
+	artifactoryPublish {
+		publications(publishing.publications.rrr)
+	}
+}
+
+//TODO Вынести в publishing.gradle
+//TODO publish JavaLib работает пока только в mavenLocal()
+project(simpleTelnet.name) {
+	artifactoryPublish.dependsOn('build')
+	publishing {
+		publications {
+			rrr(MavenPublication) {
+				groupId = "ru.endroad"
+				artifactId = simpleTelnet.name
+				version = simpleTelnet.version
+				// Tell maven to prepare the generated "*.aar" file for publishing
+				artifact("$buildDir/libs/${project.getName()}.jar")
+			}
+		}
+	}
+
+	artifactoryPublish {
+		publications(publishing.publications.rrr)
 	}
 }
