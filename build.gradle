@@ -18,36 +18,48 @@ allprojects {
 	}
 }
 
+//TODO Вынести в subprojects.gradle
 def javaLibs = [
 	"simple-ftp",
 	"simple-telnet"
 ]
+def androidLibs = [
+	"fragment-navigation",
+	"vkontakte"
+]
 
-subprojects {
-	if (javaLibs.contains(project.name)) {
-		apply plugin: 'java-library'
-		apply plugin: 'kotlin'
-		dependencies {
-			implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${versions.kotlin}"
-		}
-	} else {
-		apply plugin: 'com.android.library'
-		apply plugin: 'kotlin-android'
-		apply plugin: 'kotlin-android-extensions'
-		android {
-			compileSdkVersion 29
-			buildToolsVersion "29.0.3"
+//TODO Вынести в subprojects.gradle
+def getProjectsBy(List<String> libraries) {
+	subprojects.findAll { libraries.contains(it.name) }
+}
 
-			defaultConfig {
-				minSdkVersion 21
-				targetSdkVersion 29
-				versionCode 2
-				versionName "2.0"
-			}
+//TODO Вынести в subprojects.gradle
+configure(getProjectsBy(javaLibs)) {
+	apply plugin: 'java-library'
+	apply plugin: 'kotlin'
+	dependencies {
+		implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${versions.kotlin}"
+	}
+}
+
+//TODO Вынести в subprojects.gradle
+configure(getProjectsBy(androidLibs)) {
+	apply plugin: 'com.android.library'
+	apply plugin: 'kotlin-android'
+	apply plugin: 'kotlin-android-extensions'
+	android {
+		compileSdkVersion 29
+		buildToolsVersion "29.0.3"
+
+		defaultConfig {
+			minSdkVersion 21
+			targetSdkVersion 29
+			versionCode 2
+			versionName "2.0"
 		}
-		dependencies {
-			implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${versions.kotlin}"
-			implementation 'androidx.core:core-ktx:1.3.1'
-		}
+	}
+	dependencies {
+		implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${versions.kotlin}"
+		implementation 'androidx.core:core-ktx:1.3.1'
 	}
 }
