@@ -1,0 +1,23 @@
+dependencies {
+	//Core
+	implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${versions.kotlin}"
+	implementation "androidx.appcompat:appcompat:${versions.appcompat}"
+	implementation "androidx.core:core-ktx:${versions.androidxCore}"
+	implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:${versions.androidxViewModel}"
+	implementation "android.arch.lifecycle:extensions:${versions.lifecycleExtension}"
+
+	//Android UI
+	implementation "com.google.android.material:material:${versions.material}"
+	implementation "androidx.constraintlayout:constraintlayout:${versions.constraintLayout}"
+
+	//Utils
+	implementation "com.google.code.gson:gson:${versions.gson}"
+	implementation "com.squareup.picasso:picasso:${versions.picasso}"
+
+	//Coroutine
+	implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:${versions.coroutine}"
+	implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:${versions.coroutine}"
+
+	//Room
+	implementation "androidx.room:room-runtime:${versions.room}"
+}

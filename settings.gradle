@@ -1,5 +1,8 @@
 rootProject.name='Libraries-Warehouse'
+include ':arena'
 include ':fragment-navigation'
+include ':mvi-core'
+include ':camp'
 include ':vkontakte'
 include ':simple-ftp'
 include ':simple-telnet'

@@ -29,7 +29,10 @@ def javaLibs = [
 	simpleTelnet.name
 ]
 def androidLibs = [
+	arena.name,
 	fragmentNavigation.name,
+	mviCore.name,
+	camp.name,
 	vkontakte.name
 ]
 
@@ -91,6 +94,26 @@ artifactory {
 }
 
 //TODO Вынести в publishing.gradle
+project(arena.name) {
+	artifactoryPublish.dependsOn('build')
+	publishing {
+		publications {
+			aar(MavenPublication) {
+				groupId = "ru.endroad"
+				artifactId = arena.name
+				version = arena.version
+				// Tell maven to prepare the generated "*.aar" file for publishing
+				artifact("$buildDir/outputs/aar/${project.getName()}-release.aar")
+			}
+		}
+	}
+
+	artifactoryPublish {
+		publications(publishing.publications.aar)
+	}
+}
+
+//TODO Вынести в publishing.gradle
 project(fragmentNavigation.name) {
 	artifactoryPublish.dependsOn('build')
 	publishing {
@@ -99,6 +122,46 @@ project(fragmentNavigation.name) {
 				groupId = "ru.endroad"
 				artifactId = fragmentNavigation.name
 				version = fragmentNavigation.version
+				// Tell maven to prepare the generated "*.aar" file for publishing
+				artifact("$buildDir/outputs/aar/${project.getName()}-release.aar")
+			}
+		}
+	}
+
+	artifactoryPublish {
+		publications(publishing.publications.aar)
+	}
+}
+
+//TODO Вынести в publishing.gradle
+project(mviCore.name) {
+	artifactoryPublish.dependsOn('build')
+	publishing {
+		publications {
+			aar(MavenPublication) {
+				groupId = "ru.endroad"
+				artifactId = mviCore.name
+				version = mviCore.version
+				// Tell maven to prepare the generated "*.aar" file for publishing
+				artifact("$buildDir/outputs/aar/${project.getName()}-release.aar")
+			}
+		}
+	}
+
+	artifactoryPublish {
+		publications(publishing.publications.aar)
+	}
+}
+
+//TODO Вынести в publishing.gradle
+project(camp.name) {
+	artifactoryPublish.dependsOn('build')
+	publishing {
+		publications {
+			aar(MavenPublication) {
+				groupId = "ru.endroad"
+				artifactId = camp.name
+				version = camp.version
 				// Tell maven to prepare the generated "*.aar" file for publishing
 				artifact("$buildDir/outputs/aar/${project.getName()}-release.aar")
 			}
