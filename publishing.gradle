@@ -1,0 +1,19 @@
+def fragmentNavigation = [:]
+fragmentNavigation.name = "fragment-navigation"
+fragmentNavigation.version = "0.9"
+ext.fragmentNavigation = fragmentNavigation
+
+def vkontakte = [:]
+vkontakte.name = "vkontakte"
+vkontakte.version = "0.9"
+ext.vkontakte = vkontakte
+
+def simpleFtp = [:]
+simpleFtp.name = "simple-ftp"
+simpleFtp.version = "0.9"
+ext.simpleFtp = simpleFtp
+
+def simpleTelnet = [:]
+simpleTelnet.name = "simple-telnet"
+simpleTelnet.version = "0.9"
+ext.simpleTelnet = simpleTelnet
